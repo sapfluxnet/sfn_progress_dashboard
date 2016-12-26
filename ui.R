@@ -1,30 +1,45 @@
-
-# This is the user-interface definition of a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
+# libraries
 library(shiny)
+library(shinydashboard)
 
-shinyUI(fluidPage(
-
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-    ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("distPlot")
+dashboardPage(
+  
+  # dashboard header
+  dashboardHeader(
+    title = "SAPFLUXNET Progress Report"
+  ),
+  
+  # disAble sidebar
+  dashboardSidebar(disable = TRUE),
+  
+  # dashboard body
+  dashboardBody(
+    
+    fluidRow(
+      tabBox(
+        id = 'main', title = '', width = 12, height = '100%',
+        
+        # map tab
+        tabPanel(
+          title = 'Site stats',
+          fluidRow(
+            valueBoxOutput("site_number"),
+            valueBoxOutput("countries"),
+            valueBoxOutput("contributors")
+          ),
+          fluidRow(
+            column(
+              width = 8,
+              leafletOutput('map', height = '500px', width = 'auto')
+            ),
+            
+            column(
+              width = 4,
+              DT::dataTableOutput('countryTable', height = '500px', width  = 'auto')
+            )
+          )
+        )
+      )
     )
   )
-))
+)
