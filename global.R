@@ -12,13 +12,24 @@ library(leaflet)
 library(DT)
 library(dplyr)
 library(ggplot2)
+library(ggiraph)
+library(viridis)
 
 # function data load
 load_and_show <- function() {
   
-  load('level_1_metadata.RData', envir = .GlobalEnv)
-  load('level_1_data.RData', envir = .GlobalEnv)
+  progress <- shiny::Progress$new()
+  progress$set(message = "Loading and crunching data", value = 0)
+  # Close the progress when this reactive exits (even if there's an error)
+  on.exit(progress$close())
   
+  progress$inc(1/3, detail = "Metadata")
+  load('level_1_metadata.RData', envir = .GlobalEnv)
+  
+  progress$inc(1/3, detail = "Data")
+  # load('level_1_data.RData', envir = .GlobalEnv)
+  
+  progress$inc(1/3, detail = "Completed!")
 }
 
 # functions map
