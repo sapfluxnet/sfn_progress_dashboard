@@ -23,6 +23,39 @@ dashboardPage(
       tabBox(
         id = 'main', title = '', width = 12, height = NULL,
         
+        # intro tab
+        tabPanel(
+          title = 'Introduction',
+          # intro card
+          fluidRow(
+            column(width = 3),
+            column(width = 6,
+                   box(
+                     title = "Welcome to the progress updates app for SAPFLUXNET!!",
+                     width = 12, background = "light-blue",
+                     p("We at SAPFLUXNET Project are working hard in the process",
+                       " of quality assesing of received data, putting all",
+                       " together and building the best global sap flow database for",
+                       " your pleasure."),
+                     p("In the meantime, take a glance on some metadata that we have already")
+                   )),
+            column(width = 3)
+          ),
+          
+          # second row, cards with info about the tabs
+          fluidRow(
+            box(
+              title = tags$a("Sites", href = '#tab-7921-2'),
+              width = 4, background = "navy",
+              p("Here you can see the sites in a map. Feel free to zoom in and",
+                " zoom out. Cliking in the points gives you info about the sites",
+                " and clicking in the table isolates the selected site in the
+                  map for easy inspection")
+              
+            )
+          )
+        ),
+        
         # site tab
         tabPanel(
           title = 'Sites',

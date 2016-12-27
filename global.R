@@ -187,12 +187,7 @@ custom_header <- dashboardHeader(
     height = '32px', width = '32px',
     alt = 'Go to project web'
   ),
-  titleWidth = 400,
-  dropdownMenu(type = "messages",
-               messageItem(
-                 from = "Sales Dept",
-                 message = "Sales are steady this month."
-               ))
+  titleWidth = 400
 )
 
 custom_header$children[[3]]$children[[3]]$children <- tags$ul(
@@ -200,27 +195,10 @@ custom_header$children[[3]]$children[[3]]$children <- tags$ul(
   tags$li(
     class = 'dropdown messages-menu',
     tags$a(
-      class = 'dropdown-toggle',
+      class = 'contributor-link',
+      icon('info-circle', class = 'fa-lg'),
       href = 'https://github.com/sapfluxnet/sapfluxnet-public/wiki',
-      icon('info-circle'),
-      span("Didn't send data yet?"),
-      span('Contribute to the project!')
-    )
-  )
-)
-
-
-# foo$children[[3]]$children[[3]]$children[[1]]
-
-tags$ul(
-  class = 'nav navbar-nav',
-  tags$li(
-    class = 'dropdown messages-menu',
-    tags$a(
-      class = 'dropdown-toggle',
-      href = 'https://github.com/sapfluxnet/sapfluxnet-public/wiki',
-      icon('info-circle'),
-      span('Contribute to the project!')
+      span("Contribute to SAPFLUXNET")
     )
   )
 )
