@@ -46,3 +46,11 @@
 .nav>li>a>.fa {
   color: #336E7B;
 }
+
+.skin-blue .left-side, .skin-blue .main-sidebar, .skin-blue .wrapper {
+  background-color: #89C4F4;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: #E4F1FE;
+}

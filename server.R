@@ -12,12 +12,12 @@ shinyServer(function(input, output) {
   # modules
   callModule(sitesvb, 'sites_1', data = site_md)
   callModule(sitesvb, 'sites_2', data = site_md)
-  callModule(sitesvb, 'sites_3', data = site_md)
-  callModule(sitesvb, 'sites_4', data = site_md)
+  # callModule(sitesvb, 'sites_3', data = site_md)
+  # callModule(sitesvb, 'sites_4', data = site_md)
   callModule(sitesvb, 'sites_5', data = site_md)
   callModule(countriesvb, 'countries_1', data = site_md)
   callModule(countriesvb, 'countries_2', data = site_md)
-  callModule(contributorsvb, 'contributors_1', data = site_md)
+  # callModule(contributorsvb, 'contributors_1', data = site_md)
   callModule(contributorsvb, 'contributors_2', data = site_md)
   
     # site_map
@@ -102,7 +102,7 @@ shinyServer(function(input, output) {
       value = biome_number_value,
       subtitle = 'Biomes',
       icon = icon('cloud', lib = 'font-awesome'),
-      color = 'blue',
+      color = 'light-blue',
       width = 4
     )
   })
@@ -215,7 +215,7 @@ shinyServer(function(input, output) {
       value = plants_value,
       subtitle = 'Plants',
       icon = icon('tree', lib = 'font-awesome'),
-      color = 'light-blue',
+      color = 'aqua',
       width = 4
     )
   })
@@ -229,7 +229,7 @@ shinyServer(function(input, output) {
       value = methods_value,
       subtitle = 'Sap flow methods',
       icon = icon('wrench', lib = 'font-awesome'),
-      color = 'blue',
+      color = 'light-blue',
       width = 4
     )
   })
@@ -308,7 +308,7 @@ shinyServer(function(input, output) {
       value = specie_number_value,
       subtitle = 'Species',
       icon = icon('leaf', lib = 'font-awesome'),
-      color = 'light-blue',
+      color = 'aqua',
       width = 4
     )
   })
@@ -322,7 +322,7 @@ shinyServer(function(input, output) {
       value = genus_number_value,
       subtitle = 'Genus',
       icon = icon('code-fork', lib = 'font-awesome'),
-      color = 'blue',
+      color = 'light-blue',
       width = 4
     )
   })
@@ -364,7 +364,7 @@ shinyServer(function(input, output) {
       geom_bar_interactive(aes(tooltip = si_code, data_id = si_code),
                            stat = 'identity') +
       viridis::scale_fill_viridis(discrete = TRUE) +
-      labs(x = '', y = 'Number of plants', title = 'Genus') +
+      labs(x = '', y = 'Number of plants', title = 'Genera') +
       coord_flip() +
       bar_minimal_theme() +
       theme(
@@ -395,7 +395,7 @@ shinyServer(function(input, output) {
       value = institution_number_value,
       subtitle = 'Institutions',
       icon = icon('university', lib = 'font-awesome'),
-      color = 'light-blue',
+      color = 'aqua',
       width = 4
     )
   })

@@ -73,7 +73,7 @@ contributorsvb <- function(input, output, session, data) {
       value = contributor_number_value,
       subtitle = 'Contributors',
       icon = icon('users', lib = 'font-awesome'),
-      color = 'blue',
+      color = 'light-blue',
       width = 4
     )
   })

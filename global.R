@@ -44,8 +44,6 @@ site_popup <- function(site, lat, lng) {
   popup_text <- as.character(tagList(
     tags$h4(selected_site[['si_code']]),
     tags$strong(selected_site[['si_country']]), tags$br(),
-    # sprintf('Paper: %s', tags$a(href = selected_site$si_paper)), tags$br(),
-    tags$a(selected_site[['si_paper']], href = selected_site[['si_paper']]), tags$br(),
     sprintf('IGBP: %s', selected_site[['si_ibgp']]), tags$br(),
     sprintf('Elevation above sea level: %s', selected_site[['si_elev']]), tags$br(),
     sprintf('In Dendroglobal? %s', selected_site[['si_dendro_network']]), tags$br(),
@@ -198,7 +196,7 @@ custom_header$children[[3]]$children[[3]]$children <- tags$ul(
       class = 'contributor-link',
       icon('info-circle', class = 'fa-lg'),
       href = 'https://github.com/sapfluxnet/sapfluxnet-public/wiki',
-      span("Contribute to SAPFLUXNET")
+      span("SAPFLUXNET Project Wiki")
     )
   )
 )
