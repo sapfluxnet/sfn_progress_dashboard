@@ -1,0 +1,26 @@
+.content-wrapper {
+  background-color: #89C4F4;
+}
+
+.nav-tabs-custom>.tab-content {
+  background: #E4F1FE;
+}
+
+.nav-tabs {
+  background: #E4F1FE;
+}
+
+.nav-tabs-custom>.nav-tabs>li.active>a {
+  background: #d1e0fe;
+}
+
+.nav-tabs-custom>.nav-tabs>li.active {
+  border-bottom-color: #3c8dbc;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-top-width: 0;
+}
+
+.nav-tabs-custom>.nav-tabs>li.active:hover>a {
+  background-color: #d1e0fe;
+}

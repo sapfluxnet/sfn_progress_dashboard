@@ -52,6 +52,11 @@ shinyServer(function(input, output) {
           scroller = TRUE
         ),
         selection = list(target = 'row')
+      ) %>%
+      formatStyle(
+        0,
+        target = 'row',
+        backgroundColor = '#E4F1FE'
       )
   })
   
@@ -128,7 +133,7 @@ shinyServer(function(input, output) {
         )
       
       ggiraph(code = {print(biomes_plot)},
-              width = 0.95, width_svg = 8.25, height_svg = 4.13, zoom_max = 5,
+              width = 0.95, width_svg = 8.25, height_svg = 4.13,
               tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
               hover_css = "fill-opacity:.4",
               selected_css = "stroke:black;r:4pt;")
@@ -154,6 +159,11 @@ shinyServer(function(input, output) {
           scrollCollapse = TRUE
         ),
         selection = list(target = 'row')
+      ) %>%
+      formatStyle(
+        0,
+        target = 'row',
+        backgroundColor = '#E4F1FE'
       )
   })
   
@@ -181,6 +191,11 @@ shinyServer(function(input, output) {
           paging = FALSE
         ),
         selection = list(target = 'row')
+      ) %>%
+      formatStyle(
+        0,
+        target = 'row',
+        backgroundColor = '#E4F1FE'
       )
   })
   
@@ -236,7 +251,7 @@ shinyServer(function(input, output) {
       )
     
     ggiraph(code = {print(methods_plot)},
-            width = 0.95, width_svg = 8.25, height_svg = 4.13, zoom_max = 5,
+            width = 0.95, width_svg = 8.25, height_svg = 4.13,
             tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
             hover_css = "fill-opacity:.4",
             selected_css = "stroke:black;r:4pt;")
@@ -274,6 +289,11 @@ shinyServer(function(input, output) {
           paging = FALSE
         ),
         selection = list(target = 'row')
+      ) %>%
+      formatStyle(
+        0,
+        target = 'row',
+        backgroundColor = '#E4F1FE'
       )
   })
   
@@ -311,6 +331,7 @@ shinyServer(function(input, output) {
       ggplot(aes(x = reorder(sp_name, n, sum), y = n, fill = si_code)) +
       geom_bar_interactive(aes(tooltip = si_code, data_id = si_code),
                            stat = 'identity') +
+      scale_y_continuous(breaks)
       viridis::scale_fill_viridis(discrete = TRUE) +
       labs(x = '', y = 'Number of plants', title = 'Species') +
       coord_flip() +
@@ -324,7 +345,7 @@ shinyServer(function(input, output) {
       )
     
     ggiraph(code = {print(species_plot)},
-            width = 0.95, width_svg = 8.25, height_svg = 5, zoom_max = 5,
+            width = 0.95, width_svg = 8.25, height_svg = 5,
             tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
             hover_css = "fill-opacity:.4")
   })
@@ -351,7 +372,7 @@ shinyServer(function(input, output) {
       )
     
     ggiraph(code = {print(genus_plot)},
-            width = 0.95, width_svg = 8.25, height_svg = 5, zoom_max = 5,
+            width = 0.95, width_svg = 8.25, height_svg = 5,
             tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
             hover_css = "fill-opacity:.4")
   })
@@ -409,6 +430,11 @@ shinyServer(function(input, output) {
                                  width = '60%'))
         ),
         selection = list(target = 'row')
+      ) %>%
+      formatStyle(
+        0,
+        target = 'row',
+        backgroundColor = '#E4F1FE'
       )
       
   })

@@ -16,10 +16,15 @@ dashboardPage(
   # dashboard body
   dashboardBody(
     
+    # custom css
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")
+    ),
+    
     fluidRow(
       # general tabox
       tabBox(
-        id = 'main', title = '', width = 12, height = '100%',
+        id = 'main', title = '', width = 12, height = NULL,
         
         # site tab
         tabPanel(
