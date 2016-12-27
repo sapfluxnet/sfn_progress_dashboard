@@ -24,3 +24,13 @@
 .nav-tabs-custom>.nav-tabs>li.active:hover>a {
   background-color: #d1e0fe;
 }
+
+.logo>a {
+  color: #FFFFFF;
+}
+
+.main-header .logo {
+  font-family: "Raleway", sans-serif;
+  font-weight: regular;
+  font-size: 18px;
+}

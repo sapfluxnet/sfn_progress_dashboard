@@ -6,8 +6,13 @@ dashboardPage(
   
   # dashboard header
   dashboardHeader(
-    title = "SAPFLUXNET Progress Report",
-    titleWidth = 350
+    title = loadingLogo(
+      href = 'http://sapfluxnet.creaf.cat',
+      src = 'sfn_logo.png',
+      loadingsrc = 'pie_loader.svg',
+      height = '32px', width = '32px'
+    ),
+    titleWidth = 400
   ),
   
   # disAble sidebar

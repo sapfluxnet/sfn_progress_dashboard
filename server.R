@@ -49,6 +49,7 @@ shinyServer(function(input, output) {
         options = list(
           dom = 'ti',
           scrollY = 400,
+          scrollX = '100%',
           scroller = TRUE
         ),
         selection = list(target = 'row')
@@ -155,6 +156,7 @@ shinyServer(function(input, output) {
         options = list(
           dom = 'ti',
           scrollY = 400,
+          scrollX = '100%',
           scroller = TRUE,
           scrollCollapse = TRUE
         ),
@@ -186,6 +188,7 @@ shinyServer(function(input, output) {
         options = list(
           dom = 'ti',
           scrollY = 150,
+          scrollX = '100%',
           # scroller = TRUE,
           scrollCollapse = TRUE,
           paging = FALSE
@@ -284,6 +287,7 @@ shinyServer(function(input, output) {
         options = list(
           dom = 'ti',
           scrollY = 400,
+          scrollX = '100%',
           # scroller = TRUE,
           scrollCollapse = TRUE,
           paging = FALSE
@@ -331,7 +335,6 @@ shinyServer(function(input, output) {
       ggplot(aes(x = reorder(sp_name, n, sum), y = n, fill = si_code)) +
       geom_bar_interactive(aes(tooltip = si_code, data_id = si_code),
                            stat = 'identity') +
-      scale_y_continuous(breaks)
       viridis::scale_fill_viridis(discrete = TRUE) +
       labs(x = '', y = 'Number of plants', title = 'Species') +
       coord_flip() +
@@ -341,7 +344,8 @@ shinyServer(function(input, output) {
         legend.position = 'none',
         panel.grid.major.y = element_blank(),
         panel.grid.major.x = element_line(colour = "#5C97BF", size = rel(1),
-                                          linetype = 1)
+                                          linetype = 1),
+        axis.ticks.y = element_blank()
       )
     
     ggiraph(code = {print(species_plot)},
@@ -368,7 +372,8 @@ shinyServer(function(input, output) {
         legend.position = 'none',
         panel.grid.major.y = element_blank(),
         panel.grid.major.x = element_line(colour = "#5C97BF", size = rel(1),
-                                          linetype = 1)
+                                          linetype = 1),
+        axis.ticks.y = element_blank()
       )
     
     ggiraph(code = {print(genus_plot)},
@@ -417,6 +422,7 @@ shinyServer(function(input, output) {
         options = list(
           dom = 'ti',
           scrollY = 400,
+          scrollX = '100%',
           # scroller = TRUE,
           scrollCollapse = TRUE,
           paging = FALSE,

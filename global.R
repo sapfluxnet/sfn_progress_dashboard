@@ -146,3 +146,33 @@ bar_minimal_theme <- function(base_size = 10, base_family = "Lato") {
         complete = TRUE)
 }
 
+# header wiht custom link and logo
+# took from here :
+# http://stackoverflow.com/questions/31440564/adding-a-company-logo-to-shinydashboard-header
+# Takes a location 'href', an image location 'src', a loading gif 'loadingsrc'
+# height, width and alt text, and produces a loading logo that activates while
+# Shiny is busy
+loadingLogo <- function(href, src, loadingsrc, height = NULL, width = NULL, alt = NULL) {
+  tagList(
+    tags$head(
+      tags$script(
+        "setInterval(function(){
+                     if ($('html').attr('class')=='shiny-busy') {
+                     $('div.busy').show();
+                     $('div.notbusy').hide();
+                     } else {
+                     $('div.busy').hide();
+                     $('div.notbusy').show();
+           }
+         },100)")
+    ),
+    tags$a(href = href,
+           div(class = "busy",  
+               img(src = loadingsrc,height = height, width = width, alt = alt),
+               span('loading')),
+           div(class = 'notbusy',
+               img(src = src, height = height, width = width, alt = alt),
+               span('SAPFLUXNET Progress Report'))
+    )
+  )
+}
