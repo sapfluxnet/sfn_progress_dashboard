@@ -14,6 +14,10 @@ library(dplyr)
 library(ggplot2)
 library(ggiraph)
 library(viridis)
+library(stringr)
+
+# modules
+source('modules.R')
 
 # function data load
 load_and_show <- function() {

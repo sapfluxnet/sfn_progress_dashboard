@@ -26,9 +26,9 @@ dashboardPage(
           title = 'Sites',
           #valueboxes row
           fluidRow(
-            valueBoxOutput("site_number"),
-            valueBoxOutput("countries"),
-            valueBoxOutput("contributors")
+            sitesvbOutput("sites_1"),
+            countriesvbOutput("countries_1"),
+            contributorsvbOutput('contributors_1')
           ),
           # map and table row
           fluidRow(
@@ -49,6 +49,13 @@ dashboardPage(
         tabPanel(
           title = 'Biomes',
           
+          # valueboxes row
+          fluidRow(
+            sitesvbOutput("sites_2"),
+            countriesvbOutput("countries_2"),
+            valueBoxOutput("biomes")
+          ),
+          
           # biomes plot
           fluidRow(
             # biomes plot column
@@ -66,13 +73,13 @@ dashboardPage(
           )
         ),
         
-        # Species tab
+        # Methods tab
         tabPanel(
           title = 'Methods',
           
           # valueboxes row
           fluidRow(
-            valueBoxOutput("site_number_2"),
+            sitesvbOutput("sites_3"),
             valueBoxOutput("plants"),
             valueBoxOutput("methods")
           ),
@@ -92,6 +99,53 @@ dashboardPage(
               p('HD: Constant Heat Dissipation'),
               p('HPTM: Heat Pulse Tmax Method'),
               p('HR: Heat Ratio')
+            )
+          )
+        ),
+        
+        # Species tab
+        tabPanel(
+          title = "Species",
+          
+          # valueboxes row
+          fluidRow(
+            sitesvbOutput("sites_4"),
+            valueBoxOutput("species"),
+            valueBoxOutput("genus")
+          ),
+          
+          # plots row
+          fluidRow(
+            column(
+              width = 6,
+              ggiraphOutput('speciesPlot', width = '95%', height = '450px')
+            ),
+            column(
+              width = 6,
+              ggiraphOutput('genusPlot', width = '95%', height = '450px')
+            )
+          )
+        ),
+        
+        # Contributors tab
+        tabPanel(
+          title = 'Contributors',
+          
+          # valueboxes row
+          fluidRow(
+            sitesvbOutput("sites_5"),
+            valueBoxOutput('institutions'),
+            contributorsvbOutput('contributors_2')
+          ),
+          
+          # contributors table
+          fluidRow(
+            column(
+              width = 2
+            ),
+            column(
+              width = 8,
+              DT::dataTableOutput('contributorsTable', height = 'auto', width  = 'auto')
             )
           )
         )

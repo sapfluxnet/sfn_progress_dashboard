@@ -9,61 +9,18 @@ shinyServer(function(input, output) {
   # data
   load_and_show()
   
-  # sites value box
-  output$site_number <- renderValueBox({
-    
-    site_number_value <- length(unique(site_md[['si_code']]))
-    
-    valueBox(
-      value = site_number_value,
-      subtitle = 'Sites',
-      icon = icon('dot-circle-o', lib = 'font-awesome'),
-      color = 'aqua',
-      width = 4
-    )
-  })
+  # modules
+  callModule(sitesvb, 'sites_1', data = site_md)
+  callModule(sitesvb, 'sites_2', data = site_md)
+  callModule(sitesvb, 'sites_3', data = site_md)
+  callModule(sitesvb, 'sites_4', data = site_md)
+  callModule(sitesvb, 'sites_5', data = site_md)
+  callModule(countriesvb, 'countries_1', data = site_md)
+  callModule(countriesvb, 'countries_2', data = site_md)
+  callModule(contributorsvb, 'contributors_1', data = site_md)
+  callModule(contributorsvb, 'contributors_2', data = site_md)
   
-  # countries value box
-  output$countries <- renderValueBox({
-    
-    countries_value <- length(unique(site_md[['si_country']]))
-    
-    valueBox(
-      value = countries_value,
-      subtitle = 'Countries',
-      icon = icon('globe', lib = 'font-awesome'),
-      color = 'light-blue',
-      width = 4
-    )
-  })
-  
-  # contributors value box
-  output$contributors <- renderValueBox({
-    
-    contributors_value <- length(
-      unique(
-        c(
-          unique(
-            paste(site_md[['si_contact_firstname']],
-                  site_md[['si_contact_lastname']], sep = ' ')
-          ),
-          unique(
-            paste(site_md[['si_addcontr_firstname']],
-                  site_md[['si_addcontr_lastname']], sep = ' ')
-          ))
-      )
-    )
-    
-    valueBox(
-      value = contributors_value,
-      subtitle = 'Contributors',
-      icon = icon('users', lib = 'font-awesome'),
-      color = 'blue',
-      width = 4
-    )
-  })
-  
-  # site_map
+    # site_map
   output$map <- site_map()
   
   # popup observe
@@ -132,6 +89,18 @@ shinyServer(function(input, output) {
     
   })
   
+  # biomes valuebox
+  output$biomes <- renderValueBox({
+    biome_number_value <- length(unique(site_md[['si_biome']]))
+    valueBox(
+      value = biome_number_value,
+      subtitle = 'Biomes',
+      icon = icon('cloud', lib = 'font-awesome'),
+      color = 'blue',
+      width = 4
+    )
+  })
+  
   # biomes plot
   # reactive event to capture selected rows
   biomes_plot_reactive <- eventReactive(
@@ -186,7 +155,7 @@ shinyServer(function(input, output) {
     rows_selected <- input$biomesTable_rows_selected
     
     if (is.null(rows_selected)) {
-      rows_selected <- 1:length(unique(site_md[['si_biome']]))
+      return()
     }
     
     site_md %>%
@@ -207,17 +176,8 @@ shinyServer(function(input, output) {
       )
   })
   
-  output$site_number_2 <- renderValueBox({
-    
-    site_number_value <- length(unique(site_md[['si_code']]))
-    
-    valueBox(
-      value = site_number_value,
-      subtitle = 'Sites',
-      icon = icon('dot-circle-o', lib = 'font-awesome'),
-      color = 'aqua',
-      width = 4
-    )
+  output$site_number_3 <- renderValueBox({
+    siteVB_3()
   })
   
   # countries value box
@@ -261,7 +221,7 @@ shinyServer(function(input, output) {
                  tooltip = si_code)) +
       geom_bar_interactive(stat = 'identity') +
       scale_fill_viridis(discrete = TRUE) +
-      labs(x = 'Method', y = '%') +
+      labs(x = 'Method', y = '% of total plants') +
       theme_sfn() +
       theme(
         legend.position = 'none'
@@ -307,6 +267,126 @@ shinyServer(function(input, output) {
         ),
         selection = list(target = 'row')
       )
+  })
+  
+  # species valuebox
+  output$species <- renderValueBox({
+    specie_number_value <- length(unique(species_md[['sp_name']]))
+    valueBox(
+      value = specie_number_value,
+      subtitle = 'Species',
+      icon = icon('leaf', lib = 'font-awesome'),
+      color = 'light-blue',
+      width = 4
+    )
+  })
+  
+  # genus valuebox
+  output$genus <- renderValueBox({
+    genus_number_value <- length(unique(
+      str_trim(str_extract(species_md[['sp_name']], '([^\\s]+)'))
+    ))
+    valueBox(
+      value = genus_number_value,
+      subtitle = 'Genus',
+      icon = icon('code-fork', lib = 'font-awesome'),
+      color = 'blue',
+      width = 4
+    )
+  })
+  
+  # species plot
+  output$speciesPlot <- renderggiraph({
+    species_plot <- species_md %>%
+      group_by(sp_name, si_code) %>%
+      summarise(n = sum(sp_ntrees)) %>%
+      ggplot(aes(x = reorder(sp_name, n, sum), y = n, fill = si_code)) +
+      geom_bar_interactive(aes(tooltip = si_code, data_id = si_code),
+                           stat = 'identity') +
+      viridis::scale_fill_viridis(discrete = TRUE) +
+      labs(x = '', y = 'Number of plants', title = 'Species') +
+      coord_flip() +
+      theme_sfn() +
+      theme(
+        legend.title = element_blank(),
+        legend.position = 'none'
+      )
+    
+    ggiraph(code = {print(species_plot)},
+            width = 0.95, width_svg = 8.25, height_svg = 5, zoom_max = 5,
+            tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
+            hover_css = "fill-opacity:.4")
+  })
+  
+  # genus plot
+  output$genusPlot <- renderggiraph({
+    genus_plot <- species_md %>%
+      mutate(sp_genus = str_trim(str_extract(sp_name, '([^\\s]+)'))) %>%
+      group_by(sp_genus, si_code) %>%
+      summarise(n = sum(sp_ntrees)) %>%
+      ggplot(aes(x = reorder(sp_genus, n, sum), y = n, fill = si_code)) +
+      geom_bar_interactive(aes(tooltip = si_code, data_id = si_code),
+                           stat = 'identity') +
+      viridis::scale_fill_viridis(discrete = TRUE) +
+      labs(x = '', y = 'Number of plants', title = 'Genus') +
+      coord_flip() +
+      theme_sfn() +
+      theme(
+        legend.title = element_blank(),
+        legend.position = 'none'
+      )
+    
+    ggiraph(code = {print(genus_plot)},
+            width = 0.95, width_svg = 8.25, height_svg = 5, zoom_max = 5,
+            tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
+            hover_css = "fill-opacity:.4")
+  })
+  
+  # institutions valuebox
+  output$institutions <- renderValueBox({
+    institution_number_value <- length(
+      unique(
+        c(site_md[['si_contact_institution']],
+          site_md[['si_addcontr_institution']])
+      )
+    )
+    
+    valueBox(
+      value = institution_number_value,
+      subtitle = 'Institutions',
+      icon = icon('university', lib = 'font-awesome'),
+      color = 'light-blue',
+      width = 4
+    )
+  })
+  
+  # contributors table
+  output$contributorsTable <- DT::renderDataTable({
+    addcontr_df <- site_md %>%
+      arrange(si_addcontr_lastname) %>%
+      tidyr::unite(Contributor, si_addcontr_firstname, si_addcontr_lastname, sep = ' ') %>%
+      mutate(Institution = si_addcontr_institution) %>%
+      select(Contributor, Institution)
+    
+    site_md %>%
+      arrange(si_contact_lastname) %>%
+      tidyr::unite(Contributor, si_contact_firstname, si_contact_lastname, sep = ' ') %>%
+      mutate(Institution = si_contact_institution) %>%
+      select(Contributor, Institution) %>%
+      bind_rows(addcontr_df) %>%
+      distinct(Contributor, .keep_all = TRUE) %>%
+      DT::datatable(
+        extensions = 'Scroller',
+        options = list(
+          dom = 'ti',
+          scrollY = 400,
+          # scroller = TRUE,
+          scrollCollapse = TRUE,
+          paging = FALSE
+        ),
+        selection = list(target = 'row')
+      )
+      
   })
   
 })
