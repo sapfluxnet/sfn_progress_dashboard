@@ -117,7 +117,15 @@ shinyServer(function(input, output) {
         arrange(si_biome) %>%
         filter(si_biome %in% unique(.[['si_biome']])[rows_selected]) %>%
         vis_location_biome() +
-        theme_sfn()
+        bar_minimal_theme() +
+        theme(
+          panel.grid = element_blank(),
+          axis.ticks = element_blank(),
+          axis.line.x = element_line(colour = "#5C97BF", size = rel(1),
+                                     linetype = 1),
+          axis.line.y = element_line(colour = "#5C97BF", size = rel(1),
+                                     linetype = 1)
+        )
       
       ggiraph(code = {print(biomes_plot)},
               width = 0.95, width_svg = 8.25, height_svg = 4.13, zoom_max = 5,
@@ -222,7 +230,7 @@ shinyServer(function(input, output) {
       geom_bar_interactive(stat = 'identity') +
       scale_fill_viridis(discrete = TRUE) +
       labs(x = 'Method', y = '% of total plants') +
-      theme_sfn() +
+      bar_minimal_theme() +
       theme(
         legend.position = 'none'
       )
@@ -306,10 +314,13 @@ shinyServer(function(input, output) {
       viridis::scale_fill_viridis(discrete = TRUE) +
       labs(x = '', y = 'Number of plants', title = 'Species') +
       coord_flip() +
-      theme_sfn() +
+      bar_minimal_theme() +
       theme(
         legend.title = element_blank(),
-        legend.position = 'none'
+        legend.position = 'none',
+        panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_line(colour = "#5C97BF", size = rel(1),
+                                          linetype = 1)
       )
     
     ggiraph(code = {print(species_plot)},
@@ -330,10 +341,13 @@ shinyServer(function(input, output) {
       viridis::scale_fill_viridis(discrete = TRUE) +
       labs(x = '', y = 'Number of plants', title = 'Genus') +
       coord_flip() +
-      theme_sfn() +
+      bar_minimal_theme() +
       theme(
         legend.title = element_blank(),
-        legend.position = 'none'
+        legend.position = 'none',
+        panel.grid.major.y = element_blank(),
+        panel.grid.major.x = element_line(colour = "#5C97BF", size = rel(1),
+                                          linetype = 1)
       )
     
     ggiraph(code = {print(genus_plot)},
@@ -365,14 +379,16 @@ shinyServer(function(input, output) {
     addcontr_df <- site_md %>%
       arrange(si_addcontr_lastname) %>%
       tidyr::unite(Contributor, si_addcontr_firstname, si_addcontr_lastname, sep = ' ') %>%
-      mutate(Institution = si_addcontr_institution) %>%
-      select(Contributor, Institution)
+      mutate(Institution = si_addcontr_institution,
+             Reference = si_paper) %>%
+      select(Contributor, Institution, Reference)
     
     site_md %>%
       arrange(si_contact_lastname) %>%
       tidyr::unite(Contributor, si_contact_firstname, si_contact_lastname, sep = ' ') %>%
-      mutate(Institution = si_contact_institution) %>%
-      select(Contributor, Institution) %>%
+      mutate(Institution = si_contact_institution,
+             Reference = si_paper) %>%
+      select(Contributor, Institution, Reference) %>%
       bind_rows(addcontr_df) %>%
       distinct(Contributor, .keep_all = TRUE) %>%
       DT::datatable(
@@ -382,7 +398,15 @@ shinyServer(function(input, output) {
           scrollY = 400,
           # scroller = TRUE,
           scrollCollapse = TRUE,
-          paging = FALSE
+          paging = FALSE,
+          # fixedColumns = TRUE,
+          autoWidth = FALSE,
+          columnDefs = list(list(className = 'dt-left',
+                                 targets = 1:3),
+                            list(targets = 1:2,
+                                 width = '20%'),
+                            list(targets = 3,
+                                 width = '60%'))
         ),
         selection = list(target = 'row')
       )

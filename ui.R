@@ -141,10 +141,10 @@ dashboardPage(
           # contributors table
           fluidRow(
             column(
-              width = 2
+              width = 1
             ),
             column(
-              width = 8,
+              width = 10,
               DT::dataTableOutput('contributorsTable', height = 'auto', width  = 'auto')
             )
           )
