@@ -31,7 +31,7 @@ dashboardPage(
           column(width = 6,
                  box(
                    title = "Welcome to the SAPFLUXNET progress report!",
-                   width = 12, background = "light-blue",
+                   width = 12, background = "blue",
                    p("We at SAPFLUXNET Project are working hard putting all the data",
                      " together and building the best global sap flow database for",
                      " your pleasure."),
@@ -44,31 +44,32 @@ dashboardPage(
         fluidRow(
           box(
             title = img(src = 'ministry_logo.png', width = '85%'),
-            width = 4, background = 'aqua',
-            p("The Sapfluxnet project is led by researchers at CREAF and",
-              " funded by the Spanish Ministry of Economy and Competitiveness",
-              " through grant nº CGL2014-55883-JIN")
+            width = 4, background = 'light-blue',
+            "The Sapfluxnet project is led by researchers at ",
+            a(href = "http://www.creaf.cat/", "CREAF"),
+            " and funded by the Spanish Ministry of Economy and Competitiveness",
+              " through grant nº CGL2014-55883-JIN"
           ),
           
           box(
             title = icon('spinner', class = 'lg'),
-            width = 4, background = 'navy',
+            width = 4, background = 'light-blue',
             h4("Constant updates"),
-            p("Any time a new dataset is received and processed the updated",
-              " metadata will appear in this app.",
-              "If you are worried about your dataset not appearing in the app,",
-              " this only means that is still processing.")
+            "Any time a new dataset is received and processed the updated",
+            " metadata will appear in this app.",
+            "If you are worried about your dataset not appearing in the app,",
+            " this only means that is still processing."
           ),
           
           box(
             title = icon('calendar-o', class = 'lg'),
-            width = 4, background = 'navy',
-            h4("Data call still open"),
-            p("There is still time to send your data if already don't,",
-              " please go to the project wiki",
-              " to obtain info about how to contribute."),
+            width = 4, background = 'light-blue',
+            h4("Calling for data still open"),
+            "There is still time to send your data if already don't,",
+            " please go to the project ",
             a(href = 'https://github.com/sapfluxnet/sapfluxnet-public/wiki/Data-Contribution',
-              "Link")
+              "wiki"),
+            " to obtain info about how to contribute to SAPFLUXNET."
           )
         )
       ),
