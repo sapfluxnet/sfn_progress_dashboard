@@ -1,26 +1,24 @@
 # libraries
 library(shiny)
 
-# global script
-source('global.R')
-
 shinyServer(function(input, output) {
   
-  # data
+  #### data ####
   load_and_show()
   
-  # modules
+  
+  #### modules (for repeated value boxes) ####
   callModule(sitesvb, 'sites_1', data = site_md)
   callModule(sitesvb, 'sites_2', data = site_md)
   # callModule(sitesvb, 'sites_3', data = site_md)
   # callModule(sitesvb, 'sites_4', data = site_md)
-  callModule(sitesvb, 'sites_5', data = site_md)
+  # callModule(sitesvb, 'sites_5', data = site_md)
   callModule(countriesvb, 'countries_1', data = site_md)
-  callModule(countriesvb, 'countries_2', data = site_md)
+  # callModule(countriesvb, 'countries_2', data = site_md)
   # callModule(contributorsvb, 'contributors_1', data = site_md)
   callModule(contributorsvb, 'contributors_2', data = site_md)
   
-    # site_map
+  #### site_map ####
   output$map <- site_map()
   
   # popup observe
@@ -38,7 +36,7 @@ shinyServer(function(input, output) {
     })
   })
   
-  # country table
+  #### country table ####
   output$countryTable <- DT::renderDataTable({
     site_md %>%
       select(si_country, si_code) %>%
@@ -95,7 +93,7 @@ shinyServer(function(input, output) {
     
   })
   
-  # biomes valuebox
+  #### biomes valuebox ####
   output$biomes <- renderValueBox({
     biome_number_value <- length(unique(site_md[['si_biome']]))
     valueBox(
@@ -107,7 +105,7 @@ shinyServer(function(input, output) {
     )
   })
   
-  # biomes plot
+  #### biomes plot ####
   # reactive event to capture selected rows
   biomes_plot_reactive <- eventReactive(
     ignoreNULL = FALSE,
@@ -145,7 +143,7 @@ shinyServer(function(input, output) {
     biomes_plot_reactive()
   })
   
-  # biomes table
+  #### biomes table ####
   output$biomesTable <- DT::renderDataTable({
     site_md %>%
       group_by(si_biome) %>%
@@ -169,7 +167,7 @@ shinyServer(function(input, output) {
       )
   })
   
-  # biomes SITE  table
+  #### biomes SITE  table ####
   output$biomesSitesTable <- DT::renderDataTable({
     
     rows_selected <- input$biomesTable_rows_selected
@@ -202,11 +200,7 @@ shinyServer(function(input, output) {
       )
   })
   
-  output$site_number_3 <- renderValueBox({
-    siteVB_3()
-  })
-  
-  # countries value box
+  #### plants value box ####
   output$plants <- renderValueBox({
     
     plants_value <- length(plant_md[['pl_sens_meth']])
@@ -220,7 +214,7 @@ shinyServer(function(input, output) {
     )
   })
   
-  # countries value box
+  #### methods value box ####
   output$methods <- renderValueBox({
     
     methods_value <- length(unique(plant_md[['pl_sens_meth']]))
@@ -234,7 +228,7 @@ shinyServer(function(input, output) {
     )
   })
   
-  # methods plot
+  #### methods plot ####
   output$methodsPlot <- renderggiraph({
     
     total <- length(plant_md[['pl_sens_meth']])
@@ -260,7 +254,7 @@ shinyServer(function(input, output) {
             selected_css = "stroke:black;r:4pt;")
   })
   
-  # methods table
+  #### methods table ####
   output$methodsTable <- DT::renderDataTable({
     
     meth_x_site <- plant_md %>%
@@ -301,7 +295,7 @@ shinyServer(function(input, output) {
       )
   })
   
-  # species valuebox
+  #### species valuebox ####
   output$species <- renderValueBox({
     specie_number_value <- length(unique(species_md[['sp_name']]))
     valueBox(
@@ -327,7 +321,7 @@ shinyServer(function(input, output) {
     )
   })
   
-  # species plot
+  #### species plot ####
   output$speciesPlot <- renderggiraph({
     species_plot <- species_md %>%
       group_by(sp_name, si_code) %>%
@@ -354,7 +348,7 @@ shinyServer(function(input, output) {
             hover_css = "fill-opacity:.4")
   })
   
-  # genus plot
+  #### genus plot ####
   output$genusPlot <- renderggiraph({
     genus_plot <- species_md %>%
       mutate(sp_genus = str_trim(str_extract(sp_name, '([^\\s]+)'))) %>%
@@ -382,7 +376,7 @@ shinyServer(function(input, output) {
             hover_css = "fill-opacity:.4")
   })
   
-  # institutions valuebox
+  #### institutions valuebox ####
   output$institutions <- renderValueBox({
     institution_number_value <- length(
       unique(
@@ -400,7 +394,7 @@ shinyServer(function(input, output) {
     )
   })
   
-  # contributors table
+  #### contributors table ####
   output$contributorsTable <- DT::renderDataTable({
     addcontr_df <- site_md %>%
       arrange(si_addcontr_lastname) %>%

@@ -4,13 +4,13 @@ library(shinydashboard)
 
 dashboardPage(
   
-  # dashboard header
+  #### dashboard header ####
   custom_header,
   
-  # disAble sidebar
+  #### disable sidebar ####
   dashboardSidebar(disable = TRUE),
   
-  # dashboard body
+  #### dashboard body ####
   dashboardBody(
     
     # custom css
@@ -22,7 +22,7 @@ dashboardPage(
     tabBox(
       id = 'main', title = '', width = 12, height = NULL,
       
-      # intro tab
+      #### intro tab ####
       tabPanel(
         title = 'Start',
         # intro card
@@ -74,7 +74,7 @@ dashboardPage(
         )
       ),
       
-      # site tab
+      # site tab ####
       tabPanel(
         title = 'Sites',
         #valueboxes row
@@ -105,7 +105,7 @@ dashboardPage(
         )
       ),
       
-      # Biomes tab
+      # Biomes tab ####
       tabPanel(
         title = 'Biomes',
         
@@ -141,7 +141,7 @@ dashboardPage(
         )
       ),
       
-      # Methods tab
+      # Methods tab ####
       tabPanel(
         title = 'Methods',
         
@@ -178,7 +178,7 @@ dashboardPage(
         )
       ),
       
-      # Species tab
+      # Species tab ####
       tabPanel(
         title = "Species",
         
@@ -208,7 +208,7 @@ dashboardPage(
         )
       ),
       
-      # Contributors tab
+      # Contributors tab ####
       tabPanel(
         title = 'Contributors',
         
@@ -238,6 +238,7 @@ dashboardPage(
       )
     ),
     
+    # page footer ####
     fluidRow(
       column(
         width = 10
