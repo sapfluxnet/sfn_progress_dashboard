@@ -7,6 +7,7 @@
 # libraries
 library(shiny)
 library(shinyjs)
+library(shinydashboard)
 library(sapfluxnetQC1)
 library(leaflet)
 library(DT)
