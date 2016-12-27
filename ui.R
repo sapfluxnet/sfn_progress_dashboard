@@ -24,19 +24,18 @@ dashboardPage(
       
       # intro tab
       tabPanel(
-        title = 'Introduction',
+        title = 'Start',
         # intro card
         fluidRow(
           column(width = 3),
           column(width = 6,
                  box(
-                   title = "Welcome to the SAPFLUXNET progress report!!",
+                   title = "Welcome to the SAPFLUXNET progress report!",
                    width = 12, background = "light-blue",
-                   p("We at SAPFLUXNET Project are working hard in the process",
-                     " of quality assesing of received data, putting all",
+                   p("We at SAPFLUXNET Project are working hard putting all the data",
                      " together and building the best global sap flow database for",
                      " your pleasure."),
-                   p("In the meantime, take a glance on some metadata that we have already",
+                   p("In the meantime, take a glance on some metadata that we already have",
                      " by navigating the tabs.")
                  )),
           column(width = 3)
@@ -44,8 +43,16 @@ dashboardPage(
         
         fluidRow(
           box(
+            title = img(src = 'ministry_logo.png', width = '85%'),
+            width = 4, background = 'aqua',
+            p("The Sapfluxnet project is led by researchers at CREAF and",
+              " funded by the Spanish Ministry of Economy and Competitiveness",
+              " through grant nº CGL2014-55883-JIN")
+          ),
+          
+          box(
             title = icon('spinner', class = 'lg'),
-            width = 6, background = 'navy',
+            width = 4, background = 'navy',
             h4("Constant updates"),
             p("Any time a new dataset is received and processed the updated",
               " metadata will appear in this app.",
@@ -55,7 +62,7 @@ dashboardPage(
           
           box(
             title = icon('calendar-o', class = 'lg'),
-            width = 6, background = 'navy',
+            width = 4, background = 'navy',
             h4("Data call still open"),
             p("There is still time to send your data if already don't,",
               " please go to the project wiki",
@@ -231,11 +238,13 @@ dashboardPage(
     ),
     
     fluidRow(
-      column(width = 10),
+      column(
+        width = 10
+      ),
       column(
         width = 2,
-        "With ", icon('flask'), "from the SAPFLUXNET Team", br(),
-        "Made with ", a(href = 'https://shiny.rstudio.com/', "shiny"),
+        "Made by the SAPFLUXNET Team", br(),
+        "with ", a(href = 'https://shiny.rstudio.com/', "shiny"),
         " and ", a(href = 'https://rstudio.github.io/shinydashboard/index.html',
                    "shinydashboard")
       )
