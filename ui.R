@@ -5,15 +5,7 @@ library(shinydashboard)
 dashboardPage(
   
   # dashboard header
-  dashboardHeader(
-    title = loadingLogo(
-      href = 'http://sapfluxnet.creaf.cat',
-      src = 'sfn_logo.png',
-      loadingsrc = 'pie_loader.svg',
-      height = '32px', width = '32px'
-    ),
-    titleWidth = 400
-  ),
+  custom_header,
   
   # disAble sidebar
   dashboardSidebar(disable = TRUE),

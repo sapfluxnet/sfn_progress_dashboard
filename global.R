@@ -176,3 +176,51 @@ loadingLogo <- function(href, src, loadingsrc, height = NULL, width = NULL, alt 
     )
   )
 }
+
+
+# custom header
+custom_header <- dashboardHeader(
+  title = loadingLogo(
+    href = 'http://sapfluxnet.creaf.cat',
+    src = 'sfn_logo.png',
+    loadingsrc = 'pie_loader.svg',
+    height = '32px', width = '32px',
+    alt = 'Go to project web'
+  ),
+  titleWidth = 400,
+  dropdownMenu(type = "messages",
+               messageItem(
+                 from = "Sales Dept",
+                 message = "Sales are steady this month."
+               ))
+)
+
+custom_header$children[[3]]$children[[3]]$children <- tags$ul(
+  class = 'nav navbar-nav',
+  tags$li(
+    class = 'dropdown messages-menu',
+    tags$a(
+      class = 'dropdown-toggle',
+      href = 'https://github.com/sapfluxnet/sapfluxnet-public/wiki',
+      icon('info-circle'),
+      span("Didn't send data yet?"),
+      span('Contribute to the project!')
+    )
+  )
+)
+
+
+# foo$children[[3]]$children[[3]]$children[[1]]
+
+tags$ul(
+  class = 'nav navbar-nav',
+  tags$li(
+    class = 'dropdown messages-menu',
+    tags$a(
+      class = 'dropdown-toggle',
+      href = 'https://github.com/sapfluxnet/sapfluxnet-public/wiki',
+      icon('info-circle'),
+      span('Contribute to the project!')
+    )
+  )
+)
