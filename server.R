@@ -229,30 +229,87 @@ shinyServer(function(input, output) {
   })
   
   #### methods plot ####
+  # reactive event to capture selected rows
+  methods_plot_reactive <- eventReactive(
+    ignoreNULL = FALSE,
+    eventExpr = input$methodsTable_rows_selected,
+    valueExpr = {
+      
+      rows_selected <- input$methodsTable_rows_selected
+      
+      if (is.null(rows_selected)) {
+        total <- length(plant_md[['pl_sens_meth']])
+        
+        methods_plot <- plant_md %>%
+          group_by(pl_sens_meth, si_code) %>%
+          summarise(perc = (n()/total)*100) %>%
+          ggplot(aes(x = pl_sens_meth, y = perc, fill = pl_sens_meth,
+                     tooltip = si_code)) +
+          geom_bar_interactive(stat = 'identity') +
+          scale_fill_viridis(discrete = TRUE) +
+          labs(x = 'Method', y = '% of total plants') +
+          bar_minimal_theme() +
+          theme(
+            legend.position = 'none'
+          )
+        
+        ggiraph(code = {print(methods_plot)},
+                width = 0.95, width_svg = 8.25, height_svg = 4.13,
+                tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
+                hover_css = "fill-opacity:.4",
+                selected_css = "stroke:black;r:4pt;")
+      } else {
+        methods_plot <- plant_md %>%
+          arrange(pl_sens_meth) %>%
+          filter(pl_sens_meth %in% unique(.[['pl_sens_meth']])[rows_selected]) %>%
+          ggplot(aes(x = si_code, fill = pl_sens_meth,
+                     tooltip = pl_sens_meth)) +
+          geom_bar_interactive(stat = 'count') +
+          scale_fill_viridis(discrete = TRUE) +
+          labs(x = 'Site', y = 'Plants') +
+          bar_minimal_theme() +
+          theme(
+            legend.position = 'none',
+            axis.text.x = element_text(angle = 90)
+          )
+        
+        ggiraph(code = {print(methods_plot)},
+                width = 0.95, width_svg = 8.25, height_svg = 4.13,
+                tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
+                hover_css = "fill-opacity:.4",
+                selected_css = "stroke:black;r:4pt;")
+      }
+    }
+  )
+  
   output$methodsPlot <- renderggiraph({
-    
-    total <- length(plant_md[['pl_sens_meth']])
-    
-    methods_plot <- plant_md %>%
-      group_by(pl_sens_meth, si_code) %>%
-      summarise(perc = (n()/total)*100) %>%
-      # mutate(perc = (n/sum(n))*100) %>%
-      ggplot(aes(x = pl_sens_meth, y = perc, fill = pl_sens_meth,
-                 tooltip = si_code)) +
-      geom_bar_interactive(stat = 'identity') +
-      scale_fill_viridis(discrete = TRUE) +
-      labs(x = 'Method', y = '% of total plants') +
-      bar_minimal_theme() +
-      theme(
-        legend.position = 'none'
-      )
-    
-    ggiraph(code = {print(methods_plot)},
-            width = 0.95, width_svg = 8.25, height_svg = 4.13,
-            tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
-            hover_css = "fill-opacity:.4",
-            selected_css = "stroke:black;r:4pt;")
+    methods_plot_reactive()
   })
+  
+  
+  # output$methodsPlot <- renderggiraph({
+  #   
+  #   total <- length(plant_md[['pl_sens_meth']])
+  #   
+  #   methods_plot <- plant_md %>%
+  #     group_by(pl_sens_meth, si_code) %>%
+  #     summarise(perc = (n()/total)*100) %>%
+  #     ggplot(aes(x = pl_sens_meth, y = perc, fill = pl_sens_meth,
+  #                tooltip = si_code)) +
+  #     geom_bar_interactive(stat = 'identity') +
+  #     scale_fill_viridis(discrete = TRUE) +
+  #     labs(x = 'Method', y = '% of total plants') +
+  #     bar_minimal_theme() +
+  #     theme(
+  #       legend.position = 'none'
+  #     )
+  #   
+  #   ggiraph(code = {print(methods_plot)},
+  #           width = 0.95, width_svg = 8.25, height_svg = 4.13,
+  #           tooltip_extra_css = "background-color:#1E8BC3;font-style:italic;padding:10px;border-radius:10px 20px 10px 20px;color:white",
+  #           hover_css = "fill-opacity:.4",
+  #           selected_css = "stroke:black;r:4pt;")
+  # })
   
   #### methods table ####
   output$methodsTable <- DT::renderDataTable({

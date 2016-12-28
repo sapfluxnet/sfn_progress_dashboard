@@ -154,8 +154,8 @@ dashboardPage(
             width = 4, background = "blue",
             p("A little information about the methods used to obtain the sap",
               " flow data. Hover over the bars to see which sites uses the ",
-              "corresponding method."),
-            br()
+              "corresponding method. Clicking in the table plots the",
+              " number of plants per site for the given method/s")
           )
         ),
         
