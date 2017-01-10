@@ -453,23 +453,16 @@ shinyServer(function(input, output) {
   
   #### contributors table ####
   output$contributorsTable <- DT::renderDataTable({
-    addcontr_df <- site_md %>%
-      arrange(si_addcontr_lastname) %>%
-      tidyr::unite(Contributor, si_addcontr_firstname, si_addcontr_lastname, sep = ' ') %>%
-      mutate(Institution = si_addcontr_institution,
-             Reference = si_paper) %>%
-      select(Contributor, Institution, Reference)
-    
     site_md %>%
       arrange(si_contact_lastname) %>%
       tidyr::unite(Contributor, si_contact_firstname, si_contact_lastname, sep = ' ') %>%
       mutate(Institution = si_contact_institution,
              Reference = si_paper) %>%
       select(Contributor, Institution, Reference) %>%
-      bind_rows(addcontr_df) %>%
-      distinct(Contributor, .keep_all = TRUE) %>%
+      distinct(Contributor, Reference, .keep_all = TRUE) %>%
       DT::datatable(
         extensions = 'Scroller',
+        colnames = c('Contributor*', 'Institution', 'Reference'),
         options = list(
           dom = 'ti',
           scrollY = 400,

@@ -232,7 +232,8 @@ dashboardPage(
           ),
           column(
             width = 10,
-            DT::dataTableOutput('contributorsTable', height = 'auto', width  = 'auto')
+            DT::dataTableOutput('contributorsTable', height = 'auto', width  = 'auto'),
+            '* Only first contributor for each dataset is shown'
           )
         )
       )
