@@ -172,7 +172,7 @@ dashboardPage(
             br(),
             p('CHP: Compensation Heat Pulse'),
             p('HD: Constant Heat Dissipation'),
-            p('HFD:Heat Field Deformation'),
+            p('HFD: Heat Field Deformation'),
             p('HPTM: Heat Pulse Tmax Method'),
             p('HR: Heat Ratio'),
             p('TSHB: Trunk Segment Heat Balance')
