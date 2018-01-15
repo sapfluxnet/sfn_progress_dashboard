@@ -64,12 +64,10 @@ dashboardPage(
           box(
             title = icon('calendar-o', class = 'lg'),
             width = 4, background = 'light-blue',
-            h4("Calling for data still open"),
-            "There is still time to send your data if already don't,",
-            " please go to the project ",
-            a(href = 'https://github.com/sapfluxnet/sapfluxnet-public/wiki/Data-Contribution',
-              "wiki"),
-            " to obtain info about how to contribute to SAPFLUXNET."
+            h4("Calling for data already closed."),
+            "Data call for the first sapfluxnet database version is",
+            " closed. We are working now in putting the data in shape to our",
+            " contributors."
           )
         )
       ),
