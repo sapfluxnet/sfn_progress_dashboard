@@ -65,9 +65,10 @@ dashboardPage(
             title = icon('calendar-o', class = 'lg'),
             width = 4, background = 'light-blue',
             h4("Calling for data already closed."),
-            "Data call for the first sapfluxnet database version is",
-            " closed. We are working now in putting the data in shape to our",
-            " contributors."
+            "Data call for the first version of sapfluxnet database is",
+            " closed. We are working now in putting the data in shape for our",
+            " contributors. Stay tuned for more info at ",
+            a(href = "https://twitter.com/sapfluxnet", "@sapfluxnet")
           )
         )
       ),
