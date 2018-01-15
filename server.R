@@ -380,14 +380,22 @@ shinyServer(function(input, output) {
   
   #### species plot ####
   output$speciesPlot <- renderggiraph({
+    
+    species_md %>%
+      group_by(sp_name) %>%
+      summarise(trees = sum(sp_ntrees)) %>%
+      filter(trees > 19) %>%
+      pull(sp_name) -> sp_with_twenty
+    
     species_plot <- species_md %>%
       group_by(sp_name, si_code) %>%
       summarise(n = sum(sp_ntrees)) %>%
+      dplyr::filter(sp_name %in% sp_with_twenty) %>%
       ggplot(aes(x = reorder(sp_name, n, sum), y = n, fill = si_code)) +
       geom_bar_interactive(aes(tooltip = si_code, data_id = si_code),
                            stat = 'identity') +
       viridis::scale_fill_viridis(discrete = TRUE) +
-      labs(x = '', y = 'Number of plants', title = 'Species') +
+      labs(x = '', y = 'Number of plants', title = 'Species with at least 20 plants') +
       coord_flip() +
       bar_minimal_theme() +
       theme(
@@ -407,15 +415,24 @@ shinyServer(function(input, output) {
   
   #### genus plot ####
   output$genusPlot <- renderggiraph({
+    
+    species_md %>%
+      mutate(sp_genus = str_trim(str_extract(sp_name, '([^\\s]+)'))) %>%
+      group_by(sp_genus) %>%
+      summarise(trees = sum(sp_ntrees)) %>%
+      filter(trees > 19) %>%
+      pull(sp_genus) -> genus_with_twenty
+    
     genus_plot <- species_md %>%
       mutate(sp_genus = str_trim(str_extract(sp_name, '([^\\s]+)'))) %>%
       group_by(sp_genus, si_code) %>%
       summarise(n = sum(sp_ntrees)) %>%
+      dplyr::filter(sp_genus %in% genus_with_twenty) %>%
       ggplot(aes(x = reorder(sp_genus, n, sum), y = n, fill = si_code)) +
       geom_bar_interactive(aes(tooltip = si_code, data_id = si_code),
                            stat = 'identity') +
       viridis::scale_fill_viridis(discrete = TRUE) +
-      labs(x = '', y = 'Number of plants', title = 'Genera') +
+      labs(x = '', y = 'Number of plants', title = 'Genera with at least 20 plants') +
       coord_flip() +
       bar_minimal_theme() +
       theme(
