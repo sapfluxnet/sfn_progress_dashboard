@@ -384,8 +384,9 @@ shinyServer(function(input, output) {
     species_md %>%
       group_by(sp_name) %>%
       summarise(trees = sum(sp_ntrees)) %>%
-      filter(trees > 19) %>%
-      pull(sp_name) -> sp_with_twenty
+      filter(trees > 19) -> tmp_sps
+    
+    sp_with_twenty <- tmp_sps[['sp_name']]
     
     species_plot <- species_md %>%
       group_by(sp_name, si_code) %>%
@@ -420,8 +421,9 @@ shinyServer(function(input, output) {
       mutate(sp_genus = str_trim(str_extract(sp_name, '([^\\s]+)'))) %>%
       group_by(sp_genus) %>%
       summarise(trees = sum(sp_ntrees)) %>%
-      filter(trees > 19) %>%
-      pull(sp_genus) -> genus_with_twenty
+      filter(trees > 19) -> tmp_genus
+    
+    genus_with_twenty <- tmp_genus[['sp_genus']]
     
     genus_plot <- species_md %>%
       mutate(sp_genus = str_trim(str_extract(sp_name, '([^\\s]+)'))) %>%
